@@ -1,21 +1,25 @@
+
 from persistencia import cargar_inventario
 from inventario import mostrar_inventario, registrar_producto
 from inventario import buscar_por_codigo, buscar_por_categoria
 from inventario import modificar_producto, eliminar_producto
+from ventas import registrar_venta
+
 
 productos = cargar_inventario()
 
 while True:
-    print("\n--- MENU DE INVENTARIO ---")
+    print("\nTIENDAPY")
     print("1. Mostrar productos")
     print("2. Registrar producto")
     print("3. Buscar por codigo")
     print("4. Buscar por categoria")
     print("5. Modificar producto")
     print("6. Eliminar producto")
-    print("7. Salir")
+    print("7. Registrar venta")
+    print("8. Salir")
 
-    opcion = input("Seleccione una opcion: ")
+    opcion = input("\nSeleccione una opcion: ")
 
     if opcion == "1":
         mostrar_inventario(productos)
@@ -36,8 +40,11 @@ while True:
         eliminar_producto(productos)
 
     elif opcion == "7":
-        print("Saliendo del inventario...")
+        registrar_venta(productos)
+
+    elif opcion == "8":
+        print("saliendo")
         break
 
     else:
-        print("Opcion incorrecta.")
+        print("no sirve")
