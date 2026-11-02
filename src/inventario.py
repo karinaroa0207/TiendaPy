@@ -51,3 +51,44 @@ def registrar_producto(productos):
     guardar_inventario(productos)
 
     print("\nProducto registrado correctamente.")
+    
+    
+def buscar_por_codigo(productos):
+    print("\n--- BUSCAR PRODUCTO POR CODIGO ---")
+
+    codigo = pedir_texto("Ingrese el codigo: ")
+
+    encontrado = False
+
+    for producto in productos:
+        if producto["codigo"] == codigo:
+            print("\nProducto encontrado:")
+            print("Nombre:", producto["nombre"])
+            print("Categoria:", producto["categoria"])
+            print("Precio:", producto["precio"])
+            print("Stock:", producto["stock"])
+            print("Proveedor:", producto["proveedor"])
+            encontrado = True
+
+    if encontrado == False:
+        print("No se encontro un producto con ese codigo.")
+
+
+def buscar_por_categoria(productos):
+    print("\n--- BUSCAR PRODUCTOS POR CATEGORIA ---")
+
+    categoria = pedir_texto("Ingrese la categoria: ")
+
+    encontrado = False
+
+    for producto in productos:
+        if producto["categoria"].lower() == categoria.lower():
+            print("-------------------------")
+            print("Codigo:", producto["codigo"])
+            print("Nombre:", producto["nombre"])
+            print("Precio:", producto["precio"])
+            print("Stock:", producto["stock"])
+            encontrado = True
+
+    if encontrado == False:
+        print("No hay productos en esa categoria.")
