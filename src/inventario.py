@@ -4,7 +4,7 @@ from validaciones import pedir_decimal_positivo
 from persistencia import guardar_inventario
 
 
-def mostrar_inventario(productos):
+def mostrar_inventario(productos) -> None:
     print("\n--- INVENTARIO DE TIENDAPY ---")
 
     if len(productos) == 0:
@@ -20,7 +20,7 @@ def mostrar_inventario(productos):
             print("Proveedor:", producto["proveedor"])
 
 
-def registrar_producto(productos):
+def registrar_producto(productos) -> None:
     print("\n--- REGISTRAR PRODUCTO ---")
 
     codigo = pedir_texto("Codigo: ")
@@ -53,7 +53,7 @@ def registrar_producto(productos):
     print("\nProducto registrado correctamente.")
     
     
-def buscar_por_codigo(productos):
+def buscar_por_codigo(productos) -> None:
     print("\n--- BUSCAR PRODUCTO POR CODIGO ---")
 
     codigo = pedir_texto("Ingrese el codigo: ")
@@ -74,7 +74,7 @@ def buscar_por_codigo(productos):
         print("No se encontro un producto con ese codigo.")
 
 
-def buscar_por_categoria(productos):
+def buscar_por_categoria(productos) -> None:
     print("\n--- BUSCAR PRODUCTOS POR CATEGORIA ---")
 
     categoria = pedir_texto("ingrese la categoria: ")
@@ -94,8 +94,8 @@ def buscar_por_categoria(productos):
         print("no hay productos en esa categoria.")
         
 
-def modificar_producto(productos):
-    print("\n--- MODIFICAR PRODUCTO ---")
+def modificar_producto(productos) -> None:
+    print("\n---MODIFICAR PRODUCTO---")
 
     codigo = pedir_texto("ingrese el codigo del producto: ")
 
@@ -105,10 +105,10 @@ def modificar_producto(productos):
         if producto["codigo"] == codigo:
             encontrado = True
 
-            print("\nProducto encontrado:", producto["nombre"])
-            print("1. Modificar precio")
-            print("2. Modificar stock")
-            print("3. Modificar precio y stock")
+            print("\nproducto encontrado:", producto["nombre"])
+            print("1.modificar precio")
+            print("2.modificar stock")
+            print("3.modificar precio y stock")
 
             opcion = input("seleccione una opcion: ")
 
@@ -134,8 +134,8 @@ def modificar_producto(productos):
         print("no se encontro el producto.")
 
 
-def eliminar_producto(productos):
-    print("\n--- ELIMINAR PRODUCTO ---")
+def eliminar_producto(productos) -> None:
+    print("\n---ELIMINAR PRODUCTO ;)")
 
     codigo = pedir_texto("ingrese el codigo del producto: ")
 

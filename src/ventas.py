@@ -26,7 +26,7 @@ def calcular_descuento(subtotal: float) -> float:
 
 
 def registrar_venta(productos: list) -> None:
-    print("\n--- REGISTRAR VENTA ---")
+    print("\n---REGISTRAR VENTA---")
 
     carrito = []
 
@@ -85,7 +85,7 @@ def registrar_venta(productos: list) -> None:
 
     subtotal = 0
 
-    print("\n--- DETALLE DE LA VENTA---")
+    print("\n---DETALLE DE LA VENTA---")
 
     for item in carrito:
         valor = item["precio"] * item["cantidad"]
