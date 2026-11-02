@@ -21,7 +21,6 @@ def mostrar_alertas_stock(productos: list) -> None:
         for producto in productos:
             if producto["proveedor"] == proveedor:
                 if producto["stock"] <= producto["stock_minimo"]:
-                    print("-----------------------------")
                     print("Codigo:", producto["codigo"])
                     print("Nombre:", producto["nombre"])
                     print("Stock actual:", producto["stock"])
@@ -44,7 +43,6 @@ def generar_reporte_diario(productos: list) -> None:
     productos_vendidos = {}
     categorias_movimiento = []
 
-    # Revisar las ventas del dia
     for venta in ventas:
         datos = venta.split("|")
 

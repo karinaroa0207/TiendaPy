@@ -17,25 +17,28 @@ def cargar_inventario() -> list:
                 datos = linea.strip().split("|")
 
                 if len(datos) == 7:
-                    producto = {
-                        "codigo": datos[0],
-                        "nombre": datos[1],
-                        "categoria": datos[2],
-                        "precio": float(datos[3]),
-                        "stock": int(datos[4]),
-                        "stock_minimo": int(datos[5]),
-                        "proveedor": datos[6]
-                    }
+                    try:
+                        producto = {
+                            "codigo": datos[0],
+                            "nombre": datos[1],
+                            "categoria": datos[2],
+                            "precio": float(datos[3]),
+                            "stock": int(datos[4]),
+                            "stock_minimo": int(datos[5]),
+                            "proveedor": datos[6]
+                        }
 
-                    productos.append(producto)
+                        productos.append(producto)
+
+                    except ValueError:
+                        print("se omitio(salto) una linea con datos incorrectos.")
                 else:
-                    print("Advertencia: se omitio una linea incorrecta.")
+                    print("se omitio(salto) una linea incorrecta.")
 
-    except (ValueError, OSError) as error:
-        print("Error al leer el inventario:", error)
+    except OSError as error:
+        print("no se puede leer el inventario:", error)
 
     return productos
-
 
 def guardar_inventario(productos) -> None:
     try:
