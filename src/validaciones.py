@@ -1,4 +1,4 @@
-def pedir_texto(mensaje):
+def pedir_texto(mensaje) -> str:
     while True:
         dato = input(mensaje).strip()
 
@@ -8,7 +8,7 @@ def pedir_texto(mensaje):
             return dato
 
 
-def pedir_entero_positivo(mensaje):
+def pedir_entero_positivo(mensaje) -> int:
     while True:
         try:
             dato = int(input(mensaje))
@@ -22,7 +22,7 @@ def pedir_entero_positivo(mensaje):
             print("debes ingresar un numero entero.")
 
 
-def pedir_decimal_positivo(mensaje):
+def pedir_decimal_positivo(mensaje) -> float:
     while True:
         try:
             dato = float(input(mensaje))

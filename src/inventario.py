@@ -77,7 +77,7 @@ def buscar_por_codigo(productos):
 def buscar_por_categoria(productos):
     print("\n--- BUSCAR PRODUCTOS POR CATEGORIA ---")
 
-    categoria = pedir_texto("Ingrese la categoria: ")
+    categoria = pedir_texto("ingrese la categoria: ")
 
     encontrado = False
 
@@ -91,4 +91,71 @@ def buscar_por_categoria(productos):
             encontrado = True
 
     if encontrado == False:
-        print("No hay productos en esa categoria.")
+        print("no hay productos en esa categoria.")
+        
+
+def modificar_producto(productos):
+    print("\n--- MODIFICAR PRODUCTO ---")
+
+    codigo = pedir_texto("ingrese el codigo del producto: ")
+
+    encontrado = False
+
+    for producto in productos:
+        if producto["codigo"] == codigo:
+            encontrado = True
+
+            print("\nProducto encontrado:", producto["nombre"])
+            print("1. Modificar precio")
+            print("2. Modificar stock")
+            print("3. Modificar precio y stock")
+
+            opcion = input("seleccione una opcion: ")
+
+            if opcion == "1":
+                producto["precio"] = pedir_decimal_positivo("Nuevo precio: ")
+
+            elif opcion == "2":
+                producto["stock"] = pedir_entero_positivo("Nuevo stock: ")
+
+            elif opcion == "3":
+                producto["precio"] = pedir_decimal_positivo("Nuevo precio: ")
+                producto["stock"] = pedir_entero_positivo("Nuevo stock: ")
+
+            else:
+                print("no hay otra opcion")
+                return
+
+            guardar_inventario(productos)
+            print("producto modificado correctamente.")
+            break
+
+    if encontrado == False:
+        print("no se encontro el producto.")
+
+
+def eliminar_producto(productos):
+    print("\n--- ELIMINAR PRODUCTO ---")
+
+    codigo = pedir_texto("ingrese el codigo del producto: ")
+
+    encontrado = False
+
+    for producto in productos:
+        if producto["codigo"] == codigo:
+            encontrado = True
+
+            print("Producto:", producto["nombre"])
+            confirmar = input("desea eliminarlo? (s/n): ").lower()
+
+            if confirmar == "s":
+                productos.remove(producto)
+                guardar_inventario(productos)
+                print("producto eliminado correctamente.")
+            else:
+                print("no se elimino el producto.")
+
+            break
+
+    if encontrado == False:
+        print("no se encontro el producto.")

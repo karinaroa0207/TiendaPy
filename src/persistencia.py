@@ -4,7 +4,7 @@ RUTA_INVENTARIO = "data/inventario.txt"
 RUTA_VENTAS = "data/ventas.txt"
 
 
-def cargar_inventario():
+def cargar_inventario() -> list:
     productos = []
 
     if not os.path.exists(RUTA_INVENTARIO):
@@ -37,7 +37,7 @@ def cargar_inventario():
     return productos
 
 
-def guardar_inventario(productos):
+def guardar_inventario(productos) -> None:
     try:
         with open(RUTA_INVENTARIO, "w", encoding="utf-8") as archivo:
             for producto in productos:
@@ -57,7 +57,7 @@ def guardar_inventario(productos):
         print("Error al guardar el inventario:", error)
 
 
-def guardar_venta(venta):
+def guardar_venta(venta) -> None:
     try:
         with open(RUTA_VENTAS, "a", encoding="utf-8") as archivo:
             archivo.write(venta + "\n")
@@ -66,7 +66,7 @@ def guardar_venta(venta):
         print("Error al guardar la venta:", error)
 
 
-def cargar_ventas():
+def cargar_ventas() -> list:
     ventas = []
 
     if not os.path.exists(RUTA_VENTAS):

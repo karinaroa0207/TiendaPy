@@ -1,6 +1,7 @@
 from persistencia import cargar_inventario
 from inventario import mostrar_inventario, registrar_producto
 from inventario import buscar_por_codigo, buscar_por_categoria
+from inventario import modificar_producto, eliminar_producto
 
 productos = cargar_inventario()
 
@@ -10,7 +11,9 @@ while True:
     print("2. Registrar producto")
     print("3. Buscar por codigo")
     print("4. Buscar por categoria")
-    print("5. Salir")
+    print("5. Modificar producto")
+    print("6. Eliminar producto")
+    print("7. Salir")
 
     opcion = input("Seleccione una opcion: ")
 
@@ -27,6 +30,12 @@ while True:
         buscar_por_categoria(productos)
 
     elif opcion == "5":
+        modificar_producto(productos)
+
+    elif opcion == "6":
+        eliminar_producto(productos)
+
+    elif opcion == "7":
         print("Saliendo del inventario...")
         break
 
