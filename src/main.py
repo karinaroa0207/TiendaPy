@@ -5,21 +5,22 @@ from inventario import buscar_por_codigo, buscar_por_categoria
 from inventario import modificar_producto, eliminar_producto
 from ventas import registrar_venta
 from reportes import mostrar_alertas_stock
-
+from reportes import generar_reporte_diario
 
 productos = cargar_inventario()
 
 while True:
-    print("\n========== TIENDAPY ==========")
-    print("1. Mostrar productos")
-    print("2. Registrar producto")
-    print("3. Buscar por codigo")
-    print("4. Buscar por categoria")
-    print("5. Modificar producto")
-    print("6. Eliminar producto")
-    print("7. Registrar venta")
-    print("8. Alertas de inventario")
-    print("9. Salir")
+    print("\nTIENDAPY")
+    print("1. mostrar productos")
+    print("2. registrar producto")
+    print("3. buscar por codigo")
+    print("4. buscar por categoria")
+    print("5. modificar producto")
+    print("6. eliminar producto")
+    print("7. registrar venta")
+    print("8. alertas de inventario")
+    print("9. reporte diario de ventas")
+    print("10. salir")
 
     opcion = input("\nSeleccione una opcion: ")
 
@@ -48,8 +49,11 @@ while True:
         mostrar_alertas_stock(productos)
 
     elif opcion == "9":
-        print("Saliendo de TiendaPy...")
+        generar_reporte_diario(productos)
+
+    elif opcion == "10":
+        print("saliendo")
         break
 
     else:
-        print("no sirve esa opcion")
+        print("no sirve")
