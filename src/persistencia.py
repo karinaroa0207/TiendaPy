@@ -2,13 +2,18 @@ import os
 
 RUTA_INVENTARIO = "data/inventario.txt"
 RUTA_VENTAS = "data/ventas.txt"
+os.makedirs("data", exist_ok=True)
 
 
 def cargar_inventario() -> list:
     productos = []
 
     if not os.path.exists(RUTA_INVENTARIO):
-        print("No se encontro el archivo de inventario.")
+        print("No se encontro el archivo. Se creara uno nuevo.")
+
+        with open(RUTA_INVENTARIO, "w", encoding="utf-8"):
+            pass
+
         return productos
 
     try:

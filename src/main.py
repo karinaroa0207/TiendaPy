@@ -28,7 +28,10 @@ while True:
         mostrar_inventario(productos)
 
     elif opcion == "2":
-        registrar_producto(productos)
+        try:
+            registrar_producto(productos)
+        except ValueError as error:
+            print("no se puede registrar el producto:", error)
 
     elif opcion == "3":
         buscar_por_codigo(productos)
@@ -43,7 +46,10 @@ while True:
         eliminar_producto(productos)
 
     elif opcion == "7":
-        registrar_venta(productos)
+        try:
+            registrar_venta(productos)
+        except ValueError as error:
+            print("error en la venta:", error)
 
     elif opcion == "8":
         mostrar_alertas_stock(productos)

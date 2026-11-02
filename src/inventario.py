@@ -27,8 +27,7 @@ def registrar_producto(productos) -> None:
 
     for producto in productos:
         if producto["codigo"] == codigo:
-            print("ese codigo ya existe.")
-            return
+            raise ValueError("Ese codigo ya existe.")
 
     nombre = pedir_texto("Nombre: ")
     categoria = pedir_texto("Categoria: ")

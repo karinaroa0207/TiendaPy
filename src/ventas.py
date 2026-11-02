@@ -59,8 +59,7 @@ def registrar_venta(productos: list) -> None:
         disponible = producto["stock"] - cantidad_carrito
 
         if cantidad > disponible:
-            print("no hay suficiente stock disponible.")
-            continue
+            raise ValueError("no hay suficiente stock disponible.")
 
         encontrado = False
 
