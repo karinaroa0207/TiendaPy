@@ -109,6 +109,8 @@ def generar_reporte_diario(productos: list) -> None:
             print(categoria)
 
     else:
+        print("ticket promedio $ 0")
+        print("producto mas vendido: ninguno")
         print("no se registraron ventas durante el dia.")
         print("\nPRODUCTOS SIN VENTAS")
 

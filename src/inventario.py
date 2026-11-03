@@ -18,6 +18,7 @@ def mostrar_inventario(productos) -> None:
             print("Stock:", producto["stock"])
             print("Stock minimo:", producto["stock_minimo"])
             print("Proveedor:", producto["proveedor"])
+            print("-----------------------------")
 
 
 def registrar_producto(productos) -> None:
