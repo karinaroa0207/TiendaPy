@@ -26,6 +26,12 @@ def cargar_inventario() -> list:
                 
                 if len(datos) == 7:
                     try:
+                        precio = float(datos[3])
+                        stock = int(datos[4])
+                        stock_minimo = int(datos[5])
+
+                        if precio <= 0 or stock < 0 or stock_minimo <= 0:
+                            raise ValueError
                         producto = {
                             "codigo": datos[0],
                             "nombre": datos[1],
