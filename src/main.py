@@ -1,5 +1,5 @@
 
-from persistencia import cargar_inventario
+from persistencia import cargar_inventario, guardar_inventario
 from inventario import mostrar_inventario, registrar_producto
 from inventario import buscar_por_codigo, buscar_por_categoria
 from inventario import modificar_producto, eliminar_producto
@@ -58,6 +58,7 @@ while True:
         generar_reporte_diario(productos)
 
     elif opcion == "10":
+        guardar_inventario(productos)
         print("saliendo")
         break
 
