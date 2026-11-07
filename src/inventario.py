@@ -2,27 +2,25 @@ from validaciones import pedir_texto
 from validaciones import pedir_entero_positivo
 from validaciones import pedir_decimal_positivo
 from persistencia import guardar_inventario
-
+from tabulate import tabulate
 
 def mostrar_inventario(productos) -> None:
-    print("\n--- INVENTARIO DE TIENDAPY ---")
+    print("\nINVENTARIO DE TIENDAPY")
 
     if len(productos) == 0:
         print("No hay productos registrados.")
     else:
-        for producto in productos:
-            print("Codigo:", producto["codigo"])
-            print("Nombre:", producto["nombre"])
-            print("Categoria:", producto["categoria"])
-            print("Precio:", producto["precio"])
-            print("Stock:", producto["stock"])
-            print("Stock minimo:", producto["stock_minimo"])
-            print("Proveedor:", producto["proveedor"])
-            print("-----------------------------")
-
-
+        filas = []
+        for p in productos:
+            filas.append([
+                p["codigo"], p["nombre"], p["categoria"],
+                p["precio"], p["stock"], p["stock_minimo"], p["proveedor"]
+            ])
+        encabezados = ["Código", "Nombre", "Categoría", "Precio", "Stock", "Stock Mín.", "Proveedor"]
+        print(tabulate(filas, headers=encabezados, tablefmt="grid"))
+        
 def registrar_producto(productos) -> None:
-    print("\n--- REGISTRAR PRODUCTO ---")
+    print("\n---REGISTRAR PRODUCTO---")
 
     codigo = pedir_texto("Codigo: ")
 

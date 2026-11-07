@@ -1,1 +1,1 @@
-tabulate
+tabulate==0.10.0

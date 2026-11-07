@@ -2,6 +2,7 @@ import os
 
 RUTA_INVENTARIO = "data/inventario.txt"
 RUTA_VENTAS = "data/ventas.txt"
+
 os.makedirs("data", exist_ok=True)
 
 
@@ -19,8 +20,10 @@ def cargar_inventario() -> list:
     try:
         with open(RUTA_INVENTARIO, "r", encoding="utf-8") as archivo:
             for linea in archivo:
+                if linea.strip() == "":
+                    continue
                 datos = linea.strip().split("|")
-
+                
                 if len(datos) == 7:
                     try:
                         producto = {
