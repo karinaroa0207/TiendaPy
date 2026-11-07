@@ -22,10 +22,10 @@ def mostrar_inventario(productos) -> None:
 def registrar_producto(productos) -> None:
     print("\n---REGISTRAR PRODUCTO---")
 
-    codigo = pedir_texto("Codigo: ")
+    codigo = pedir_texto("Codigo: ").upper()
 
     for producto in productos:
-        if producto["codigo"] == codigo:
+        if producto["codigo"].upper() == codigo:
             raise ValueError("Ese codigo ya existe.")
 
     nombre = pedir_texto("Nombre: ")
@@ -49,27 +49,32 @@ def registrar_producto(productos) -> None:
     guardar_inventario(productos)
 
     print("\nProducto registrado correctamente.")
-    
-    
+
+
 def buscar_por_codigo(productos) -> None:
     print("\n--- BUSCAR PRODUCTO POR CODIGO ---")
 
-    codigo = pedir_texto("Ingrese el codigo: ")
+    codigo = pedir_texto("Ingrese el codigo: ").upper()
 
-    encontrado = False
+    filas = []
 
     for producto in productos:
-        if producto["codigo"] == codigo:
-            print("\nProducto encontrado:")
-            print("Nombre:", producto["nombre"])
-            print("Categoria:", producto["categoria"])
-            print("Precio:", producto["precio"])
-            print("Stock:", producto["stock"])
-            print("Proveedor:", producto["proveedor"])
-            encontrado = True
+        if producto["codigo"].upper() == codigo:
+            filas.append([
+                producto["codigo"],
+                producto["nombre"],
+                producto["categoria"],
+                producto["precio"],
+                producto["stock"],
+                producto["proveedor"]
+            ])
 
-    if encontrado == False:
+    if len(filas) == 0:
         print("No se encontro un producto con ese codigo.")
+    else:
+        print("\nProducto encontrado:")
+        encabezados = ["Código", "Nombre", "Categoría", "Precio", "Stock", "Proveedor"]
+        print(tabulate(filas, headers=encabezados, tablefmt="grid"))
 
 
 def buscar_por_categoria(productos) -> None:
@@ -77,30 +82,33 @@ def buscar_por_categoria(productos) -> None:
 
     categoria = pedir_texto("ingrese la categoria: ")
 
-    encontrado = False
+    filas = []
 
     for producto in productos:
         if producto["categoria"].lower() == categoria.lower():
-            print("-------------------------")
-            print("Codigo:", producto["codigo"])
-            print("Nombre:", producto["nombre"])
-            print("Precio:", producto["precio"])
-            print("Stock:", producto["stock"])
-            encontrado = True
+            filas.append([
+                producto["codigo"],
+                producto["nombre"],
+                producto["precio"],
+                producto["stock"]
+            ])
 
-    if encontrado == False:
+    if len(filas) == 0:
         print("no hay productos en esa categoria.")
-        
+    else:
+        encabezados = ["Código", "Nombre", "Precio", "Stock"]
+        print(tabulate(filas, headers=encabezados, tablefmt="grid"))
+
 
 def modificar_producto(productos) -> None:
     print("\n---MODIFICAR PRODUCTO---")
 
-    codigo = pedir_texto("ingrese el codigo del producto: ")
+    codigo = pedir_texto("ingrese el codigo del producto: ").upper()
 
     encontrado = False
 
     for producto in productos:
-        if producto["codigo"] == codigo:
+        if producto["codigo"].upper() == codigo:
             encontrado = True
 
             print("\nproducto encontrado:", producto["nombre"])
@@ -135,12 +143,12 @@ def modificar_producto(productos) -> None:
 def eliminar_producto(productos) -> None:
     print("\n---ELIMINAR PRODUCTO ;)")
 
-    codigo = pedir_texto("ingrese el codigo del producto: ")
+    codigo = pedir_texto("ingrese el codigo del producto: ").upper()
 
     encontrado = False
 
     for producto in productos:
-        if producto["codigo"] == codigo:
+        if producto["codigo"].upper() == codigo:
             encontrado = True
 
             print("Producto:", producto["nombre"])
