@@ -1,5 +1,7 @@
 from datetime import date
+from tabulate import tabulate
 from persistencia import cargar_ventas
+
 
 def mostrar_alertas_stock(productos: list) -> None:
     print("\nALERTAS DE INVENTARIO")
@@ -17,19 +19,26 @@ def mostrar_alertas_stock(productos: list) -> None:
 
     for proveedor in proveedores:
         print("\nProveedor:", proveedor)
+        filas = []
 
         for producto in productos:
             if producto["proveedor"] == proveedor:
                 if producto["stock"] <= producto["stock_minimo"]:
-                    print("Codigo:", producto["codigo"])
-                    print("Nombre:", producto["nombre"])
-                    print("Stock actual:", producto["stock"])
-                    print("Stock minimo:", producto["stock_minimo"])
-
                     if producto["stock"] == 0:
-                        print("AGOTADO")
+                        estado = "AGOTADO"
                     else:
-                        print("STOCK BAJO")
+                        estado = "STOCK BAJO"
+
+                    filas.append([
+                        producto["codigo"],
+                        producto["nombre"],
+                        producto["stock"],
+                        producto["stock_minimo"],
+                        estado
+                    ])
+
+        encabezados = ["Codigo", "Nombre", "Stock actual", "Stock minimo", "Estado"]
+        print(tabulate(filas, headers=encabezados, tablefmt="grid"))
 
 
 def generar_reporte_diario(productos: list) -> None:
@@ -38,7 +47,7 @@ def generar_reporte_diario(productos: list) -> None:
     ventas = cargar_ventas()
     fecha_actual = date.today().isoformat()
 
-    total_vendido = 0
+    total_vendido = 0.0
     cantidad_ventas = 0
     productos_vendidos = {}
     categorias_movimiento = []
@@ -53,69 +62,96 @@ def generar_reporte_diario(productos: list) -> None:
         if datos[0] == fecha_actual:
             try:
                 total = float(datos[1])
-                total_vendido += total
-                cantidad_ventas += 1
+                if total <= 0:
+                    raise ValueError
 
                 detalles = datos[2].split(";")
+                temporales = {}
 
                 for detalle in detalles:
                     codigo, cantidad = detalle.split(":")
                     cantidad = int(cantidad)
+                    if cantidad <= 0:
+                        raise ValueError
 
+                    if codigo not in temporales:
+                        temporales[codigo] = 0
+                    temporales[codigo] += cantidad
+
+                total_vendido += total
+                cantidad_ventas += 1
+
+                for codigo, cantidad in temporales.items():
                     if codigo not in productos_vendidos:
                         productos_vendidos[codigo] = 0
-
                     productos_vendidos[codigo] += cantidad
 
             except ValueError:
                 print("se omitio una venta incorrecta.")
 
-    print("\nfecha:", fecha_actual)
-    print("total vendido $", total_vendido)
-    print("numero de ventas:", cantidad_ventas)
-
     if cantidad_ventas > 0:
         promedio = total_vendido / cantidad_ventas
-        print("ticket promedio $", promedio)
 
-        codigo_mas_vendido = max(
-            productos_vendidos,
-            key=productos_vendidos.get
-        )
+        max_unidades = max(productos_vendidos.values())
+        mas_vendidos = []
 
-        for producto in productos:
-            if producto["codigo"] == codigo_mas_vendido:
-                print(
-                    "producto mas vendido:",
-                    producto["nombre"],
-                    "- unidades:",
-                    productos_vendidos[codigo_mas_vendido]
-                )
+        for codigo, cant in productos_vendidos.items():
+            if cant == max_unidades:
+                nombre_prod = codigo
+                for producto in productos:
+                    if producto["codigo"] == codigo:
+                        nombre_prod = producto["nombre"]
+                mas_vendidos.append(f"{nombre_prod} ({cant} und)")
+
+        texto_mas_vendido = ", ".join(mas_vendidos)
+
+        tabla_resumen = [
+            ["Fecha", fecha_actual],
+            ["Total vendido", f"$ {total_vendido}"],
+            ["Numero de ventas", cantidad_ventas],
+            ["Ticket promedio", f"$ {promedio:.2f}"],
+            ["Producto(s) mas vendido(s)", texto_mas_vendido]
+        ]
+        print(tabulate(tabla_resumen, tablefmt="grid"))
 
         print("\nPRODUCTOS SIN VENTAS")
-
+        filas_sin_ventas = []
         for producto in productos:
             if producto["codigo"] not in productos_vendidos:
-                print(producto["nombre"])
+                filas_sin_ventas.append([producto["codigo"], producto["nombre"]])
+
+        if len(filas_sin_ventas) > 0:
+            print(tabulate(filas_sin_ventas, headers=["Codigo", "Nombre"], tablefmt="grid"))
+        else:
+            print("Todos los productos tuvieron ventas hoy.")
 
         print("\nCATEGORIAS CON MOVIMIENTO")
-
+        filas_categorias = []
         for producto in productos:
             if producto["codigo"] in productos_vendidos:
                 if producto["categoria"] not in categorias_movimiento:
                     categorias_movimiento.append(producto["categoria"])
+                    filas_categorias.append([producto["categoria"]])
 
-        for categoria in categorias_movimiento:
-            print(categoria)
+        print(tabulate(filas_categorias, headers=["Categoria"], tablefmt="grid"))
 
     else:
-        print("ticket promedio $ 0")
-        print("producto mas vendido: ninguno")
+        tabla_resumen = [
+            ["Fecha", fecha_actual],
+            ["Total vendido", "$ 0"],
+            ["Numero de ventas", 0],
+            ["Ticket promedio", "$ 0"],
+            ["Producto(s) mas vendido(s)", "ninguno"]
+        ]
+        print(tabulate(tabla_resumen, tablefmt="grid"))
         print("no se registraron ventas durante el dia.")
+
         print("\nPRODUCTOS SIN VENTAS")
-
+        filas_sin_ventas = []
         for producto in productos:
-            print(producto["nombre"])
+            filas_sin_ventas.append([producto["codigo"], producto["nombre"]])
 
-        print("no hubo categorias con movimiento.")
+        if len(filas_sin_ventas) > 0:
+            print(tabulate(filas_sin_ventas, headers=["Codigo", "Nombre"], tablefmt="grid"))
 
+        print("\nno hubo categorias con movimiento.")

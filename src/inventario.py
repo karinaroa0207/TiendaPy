@@ -78,7 +78,7 @@ def buscar_por_codigo(productos) -> None:
 
 
 def buscar_por_categoria(productos) -> None:
-    print("\n--- BUSCAR PRODUCTOS POR CATEGORIA ---")
+    print("\n---BUSCAR PRODUCTOS POR CATEGORIA---")
 
     categoria = pedir_texto("ingrese la categoria: ")
 
@@ -141,7 +141,7 @@ def modificar_producto(productos) -> None:
 
 
 def eliminar_producto(productos) -> None:
-    print("\n---ELIMINAR PRODUCTO ;)")
+    print("\nELIMINAR PRODUCTO")
 
     codigo = pedir_texto("ingrese el codigo del producto: ").upper()
 
