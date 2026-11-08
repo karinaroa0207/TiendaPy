@@ -1,4 +1,5 @@
 from datetime import date
+from tabulate import tabulate
 
 from validaciones import pedir_texto
 from validaciones import pedir_entero_positivo
@@ -10,7 +11,7 @@ from persistencia import guardar_venta
 
 def buscar_producto(productos: list, codigo: str) -> dict | None:
     for producto in productos:
-        if producto["codigo"] == codigo:
+        if producto["codigo"].upper() == codigo.upper():
             return producto
 
     return None
@@ -33,7 +34,7 @@ def registrar_venta(productos: list) -> None:
     while True:
         codigo = input(
             "\ningrese el codigo del producto (0 para terminar): "
-        ).strip()
+        ).strip().upper()
 
         if codigo == "0":
             break
@@ -53,7 +54,7 @@ def registrar_venta(productos: list) -> None:
         cantidad_carrito = 0
 
         for item in carrito:
-            if item["codigo"] == codigo:
+            if item["codigo"] == producto["codigo"]:
                 cantidad_carrito = item["cantidad"]
 
         disponible = producto["stock"] - cantidad_carrito
@@ -64,13 +65,13 @@ def registrar_venta(productos: list) -> None:
         encontrado = False
 
         for item in carrito:
-            if item["codigo"] == codigo:
+            if item["codigo"] == producto["codigo"]:
                 item["cantidad"] += cantidad
                 encontrado = True
 
         if encontrado == False:
             carrito.append({
-                "codigo": codigo,
+                "codigo": producto["codigo"],
                 "nombre": producto["nombre"],
                 "precio": producto["precio"],
                 "cantidad": cantidad
@@ -83,18 +84,20 @@ def registrar_venta(productos: list) -> None:
         return
 
     subtotal = 0
+    filas_detalle = []
 
     print("\n---DETALLE DE LA VENTA---")
 
     for item in carrito:
         valor = item["precio"] * item["cantidad"]
         subtotal += valor
-
-        print(
+        filas_detalle.append([
             item["nombre"],
-            "- Cantidad:", item["cantidad"],
-            "- Valor:", valor
-        )
+            item["cantidad"],
+            f"$ {valor}"
+        ])
+
+    print(tabulate(filas_detalle, headers=["Producto", "Cantidad", "Valor"], tablefmt="grid"))
 
     descuento = calcular_descuento(subtotal)
     total = subtotal - descuento
