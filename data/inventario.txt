@@ -1,3 +1,10 @@
-LAC001|Leche entera 1L|Lacteos|4200.0|33|10|Alqueria
-BEB003|Gaseosa 1.5L|Bebidas|5800.0|0|12|Postobon
-ASE002|Detergente 500g|Aseo|7500.0|10|5|Distribuidora Norte
+LAC001|Leche entera 1L|Lacteos|4200.0|35|10|Alqueria
+LAC002|Yogurt fresa 1L|Lacteos|8500.0|6|8|Alqueria
+LAC003|Queso campesino 250g|Lacteos|6800.0|15|5|Colanta
+BEB001|Agua sin gas 600ml|Bebidas|2000.0|25|10|Postobon
+BEB002|Jugo de caja 200ml|Bebidas|1800.0|0|15|Postobon
+BEB003|Gaseosa 1.5L|Bebidas|5800.0|8|12|Postobon
+ASE001|Jabon en barra 300g|Aseo|3200.0|4|10|Distribuidora Norte
+ASE002|Detergente 500g|Aseo|7500.0|20|5|Distribuidora Norte
+ABA001|Arroz blanco 1kg|Abarrotes|4600.0|40|15|Roa
+ABA002|Aceite vegetal 1L|Abarrotes|11500.0|9|10|Gourmet
